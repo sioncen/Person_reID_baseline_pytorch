@@ -35,7 +35,7 @@ except ImportError: # will be 3.x series
 parser = argparse.ArgumentParser(description='Training')
 parser.add_argument('--gpu_ids',default='0', type=str,help='gpu_ids: e.g. 0  0,1,2  0,2')
 parser.add_argument('--name',default='ft_ResNet50', type=str, help='output model name')
-parser.add_argument('--data_dir',default='../Market/pytorch',type=str, help='training dir path')
+parser.add_argument('--data_dir',default='/content/Market/pytorch',type=str, help='training dir path')
 parser.add_argument('--train_all', action='store_true', help='use all training data' )
 parser.add_argument('--color_jitter', action='store_true', help='use color jitter in training' )
 parser.add_argument('--batchsize', default=32, type=int, help='batchsize')
@@ -296,14 +296,14 @@ def draw_curve(current_epoch):
     if current_epoch == 0:
         ax0.legend()
         ax1.legend()
-    fig.savefig( os.path.join('./model',name,'train.jpg'))
+    fig.savefig(os.path.join('/content/Person_reID_baseline_pytorch/model',name,'train.jpg'))
 
 ######################################################################
 # Save model
 #---------------------------
 def save_network(network, epoch_label):
     save_filename = 'net_%s.pth'% epoch_label
-    save_path = os.path.join('./model',name,save_filename)
+    save_path = os.path.join('/content/Person_reID_baseline_pytorch/model',name,save_filename)
     torch.save(network.cpu().state_dict(), save_path)
     if torch.cuda.is_available():
         network.cuda(gpu_ids[0])
@@ -371,7 +371,7 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=40, gamma=0.1)
 #
 # It should take around 1-2 hours on GPU. 
 #
-dir_name = os.path.join('./model',name)
+dir_name = os.path.join('/content/Person_reID_baseline_pytorch/model',name)
 if not os.path.isdir(dir_name):
     os.mkdir(dir_name)
 #record every run
